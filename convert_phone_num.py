@@ -7,6 +7,7 @@ class ConvertPhoneNumber:
         self.letter2num, self.num2letter = get_dicts()
         self.word_list = get_word_list()
         print(self.number_to_words("1-800-724-6837"))
+        print(self.words_to_number("1-800-fgh-6837"))
 
     def number_to_words(self, raw_phone_number):
         """
@@ -57,6 +58,14 @@ class ConvertPhoneNumber:
         String: string representation of phone number
 
         """
+        phone_number = ""
+        for i in range(0, len(wordified_phone_number)):
+            if wordified_phone_number[i].isalpha():  # IF element is a letter
+                phone_number += self.letter2num[wordified_phone_number[i]]  # Convert to number
+            else:
+                phone_number += wordified_phone_number[i]
+        return phone_number
+
 
     def all_wordifications(self, raw_phone_number):
         """
