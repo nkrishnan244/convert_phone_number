@@ -1,3 +1,8 @@
+# https://stackoverflow.com/questions/874017/python-load-words-from-file-into-a-set
+def get_word_list():
+    word_list = set(line.strip() for line in open('words.txt'))
+    return word_list
+
 def get_dicts():
     letter2num = {
         "a": "2",
