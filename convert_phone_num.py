@@ -112,6 +112,7 @@ class ConvertPhoneNumber:
         reduced_phone_num = dashless_phone_number[left_most_element:]
 
         # Find all possible sub-words of the entire phone number
+        self.total_words = []
         self.find_substr(reduced_phone_num, "", raw_phone_number)
         return self.total_words
 
