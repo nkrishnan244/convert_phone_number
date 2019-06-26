@@ -5,6 +5,7 @@ class TestConvertPhoneNumber(unittest.TestCase):
     def setUp(self):
         self.convert_phone_num_ = ConvertPhoneNumber()
 
+    # Unit test doesn't make sense
     def test_number_to_words(self):
         test_cases = [
             "18007246837", # Given example (PASS)
@@ -19,6 +20,7 @@ class TestConvertPhoneNumber(unittest.TestCase):
 
         print("///////////////////////////////  DONE TESTING NUMBER TO WORDS ///////////////////////////////")
 
+    # Unit test
     def test_words_to_number(self):
         self.assertEqual(self.convert_phone_num_.words_to_number("1-800-PAINTER"), "1-800-724-6837")
         self.assertEqual(self.convert_phone_num_.words_to_number("1800PAINTER"), "1-800-724-6837")
@@ -32,6 +34,7 @@ class TestConvertPhoneNumber(unittest.TestCase):
         self.assertEqual(self.convert_phone_num_.words_to_number("wxyz"), "9999")
         self.assertEqual(self.convert_phone_num_.words_to_number("WXYZ"), "9999")
 
+    # Unit test doesn't make sense
     def test_all_wordifications(self):
         test_cases = [
             "18007246837", # Given example (PASS)

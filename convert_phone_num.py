@@ -1,6 +1,5 @@
 from helper_functions import get_dicts, get_word_list, include_dashes
 from itertools import product
-import pdb
 import random
 
 
@@ -9,7 +8,6 @@ class ConvertPhoneNumber:
         self.letter2num, self.num2letter = get_dicts()
         self.word_list = get_word_list()
         self.total_words = []
-
 
     def number_to_words(self, raw_phone_number):
         """
@@ -63,17 +61,15 @@ class ConvertPhoneNumber:
                 # Only add dash after last 4 elements, or every last 3 elements after that (4, 7, 10, etc)
                 if index_from_back == 4 or (index_from_back > 4 and (index_from_back - 4) % 3 == 0):
                     phone_number = "-" + phone_number
-        print(phone_number)
-
         return phone_number
 
     def find_substr(self, num, curr_string, raw_phone_number):
         """
-        Finds all possible substrings from a string of numbers and adds it to self.total_words
+        Finds all possible words from a string of numbers and adds it to self.total_words
 
         Parameters:
         num (String): string that represents a series of numbers
-        curr_string (String): string that represents ...
+        curr_string (String): string that represents already found substring
         raw_phone_number (String): original phone number
 
         """
@@ -102,7 +98,7 @@ class ConvertPhoneNumber:
 
         """
         dashless_phone_number = raw_phone_number.replace('-', '')  # Get rid of dashes
-        raw_phone_number = include_dashes(dashless_phone_number) # In case user formats wrong
+        raw_phone_number = include_dashes(dashless_phone_number) # In case user formats input wrong
 
         left_most_element = 0
 
@@ -115,7 +111,7 @@ class ConvertPhoneNumber:
         reduced_phone_num = dashless_phone_number[left_most_element:]
 
         # Find all possible sub-words of the entire phone number
-        self.total_words = []
+        self.total_words = [] # Allows successive calls of the function
         self.find_substr(reduced_phone_num, "", raw_phone_number)
         return self.total_words
 
@@ -140,8 +136,7 @@ class ConvertPhoneNumber:
         all_combinations = list(product(*string_to_list))  # Find all possible combinations of letters
         for char_list in all_combinations:
             curr_word = ''.join(char_list)  # Convert combination of letters into string
-            # For some reason every dictionary includes the letters of the alphabet
-            if curr_word in self.word_list and len(curr_word) > 2:  # Check if the word exists (size for readability)
+            if curr_word in self.word_list and len(curr_word) > 2:  # Check if the word exists (ignore small words)
                 length = len(curr_word)
                 # Create and store wordified number
                 words.append(curr_word)
