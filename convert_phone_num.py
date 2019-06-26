@@ -7,8 +7,8 @@ class ConvertPhoneNumber:
         self.letter2num, self.num2letter = get_dicts()
         self.word_list = get_word_list()
         self.total_words = []
-        print(self.all_wordifications(self.words_to_number("1-embezzling")))
-        print(self.number_to_words(self.words_to_number("1-embezzling")))
+        print(self.all_wordifications(self.words_to_number("1-800-PAINTER")))
+        print(self.number_to_words(self.words_to_number("1-800-PAINTER")))
 
     def number_to_words(self, raw_phone_number):
         """
@@ -53,6 +53,7 @@ class ConvertPhoneNumber:
 
         """
         dashless_phone_number = wordified_phone_number.replace('-', '')
+        dashless_phone_number = dashless_phone_number.lower()
 
         phone_number = ""
 
