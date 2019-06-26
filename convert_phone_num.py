@@ -8,7 +8,7 @@ class ConvertPhoneNumber:
         self.word_list = get_word_list()
         self.total_words = []
         print(self.all_wordifications(self.words_to_number("1-embezzling")))
-        # print(self.words_to_number("1-800-fgh-6888"))
+        print(self.number_to_words(self.words_to_number("1-embezzling")))
 
     def number_to_words(self, raw_phone_number):
         """
@@ -21,31 +21,24 @@ class ConvertPhoneNumber:
         String: string representation of "wordified" phone number
 
         """
-        num_elements = len(raw_phone_number)
-        curr_string = ""
-        string_to_list = []
-        num_dashes = -1
-        not_possible = False
-        for i in range(num_elements - 1, -1, -1):  # Iterate backwards through phone number
-            if not raw_phone_number[i] == '-':  # Only consider wordifying elements after a dash
-                curr_string = raw_phone_number[i] + curr_string
-            else:  # If we reach a dash
-                num_dashes += 1  # Used for parsing output
-                for element in curr_string:
-                    if element not in self.num2letter:  # IF we have an element that can't be converted to a letter
-                        not_possible = True
-                        break
-                    string_to_list.append(self.num2letter[element])  # Convert each number into a list of letters
-                if not_possible:
-                    return "Wordification Failed"
-                all_combinations = list(product(*string_to_list))  # Find all possible combinations of letters
-                for char_list in all_combinations:
-                    curr_word = ''.join(char_list)  # Convert combination of letters into string
-                    if curr_word in self.word_list:  # Check if the word exists
-                        length = len(curr_word)
-                        # Create and store wordified number
-                        wordified_num = raw_phone_number[0:num_elements - length - num_dashes] + curr_word.upper()
-                        return wordified_num
+        dashless_phone_number = raw_phone_number.replace('-', '')
+
+        for i in range(len(dashless_phone_number) - 1, -1, -1):
+            possible_wordify = (len(dashless_phone_number) - i) == 4 or (len(dashless_phone_number) - i) > 4 and (len(dashless_phone_number) - i - 4)%3 == 0
+            if possible_wordify:
+                words = self.find_all_words(dashless_phone_number[i:len(dashless_phone_number)])
+                if len(words) != 0:
+                    dashless_phone_number = dashless_phone_number[0:i] + words[0].upper()
+                    return self.include_dashes(dashless_phone_number)
+        return "Unable to wordify"
+
+    def include_dashes(self, dashless_phone_number):
+        phone_number = ""
+        for i in range(len(dashless_phone_number) - 1, -1, -1):
+            phone_number = dashless_phone_number[i] + phone_number
+            if (len(dashless_phone_number) - i) == 4 or (len(dashless_phone_number) - i) > 4 and (len(dashless_phone_number) - i - 4)%3 == 0:
+                phone_number = "-" + phone_number
+        return phone_number
 
 
     def words_to_number(self, wordified_phone_number):
