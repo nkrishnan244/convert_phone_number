@@ -7,8 +7,8 @@ class ConvertPhoneNumber:
         self.letter2num, self.num2letter = get_dicts()
         self.word_list = get_word_list()
         self.total_words = []
-        print(self.all_wordifications(self.words_to_number("1-800-PAINTER")))
-        print(self.number_to_words(self.words_to_number("1-800-PAINTER")))
+        print(self.all_wordifications(self.words_to_number("215-283-LEAD")))
+        print(self.number_to_words("215-283-5323"))
 
     def number_to_words(self, raw_phone_number):
         """
@@ -36,8 +36,9 @@ class ConvertPhoneNumber:
         phone_number = ""
         for i in range(len(dashless_phone_number) - 1, -1, -1):
             phone_number = dashless_phone_number[i] + phone_number
-            if (len(dashless_phone_number) - i) == 4 or (len(dashless_phone_number) - i) > 4 and (len(dashless_phone_number) - i - 4)%3 == 0:
-                phone_number = "-" + phone_number
+            if not i == 0:
+                if (len(dashless_phone_number) - i) == 4 or (len(dashless_phone_number) - i) > 4 and (len(dashless_phone_number) - i - 4)%3 == 0:
+                    phone_number = "-" + phone_number
         return phone_number
 
 
@@ -62,8 +63,10 @@ class ConvertPhoneNumber:
                 phone_number = self.letter2num[dashless_phone_number[i]] + phone_number
             else:
                 phone_number = dashless_phone_number[i] + phone_number
-            if (len(dashless_phone_number) - i) == 4 or (len(dashless_phone_number) - i) > 4 and (len(dashless_phone_number) - i - 4)%3 == 0:
-                phone_number = "-" + phone_number
+            print(i)
+            if not i == 0:
+                if (len(dashless_phone_number) - i) == 4 or (len(dashless_phone_number) - i) > 4 and (len(dashless_phone_number) - i - 4)%3 == 0:
+                    phone_number = "-" + phone_number
         print(phone_number)
 
         return phone_number
