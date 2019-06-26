@@ -7,8 +7,8 @@ class ConvertPhoneNumber:
         self.letter2num, self.num2letter = get_dicts()
         self.word_list = get_word_list()
         self.total_words = []
-        print(self.all_wordifications("1-804-232-7326"))
-        print(self.words_to_number("1-800-fgh-6837"))
+        print(self.all_wordifications(self.words_to_number("1-embezzling")))
+        # print(self.words_to_number("1-800-fgh-6888"))
 
     def number_to_words(self, raw_phone_number):
         """
@@ -59,21 +59,34 @@ class ConvertPhoneNumber:
         String: string representation of phone number
 
         """
+        dashless_phone_number = wordified_phone_number.replace('-', '')
+
         phone_number = ""
-        for i in range(0, len(wordified_phone_number)):
-            if wordified_phone_number[i].isalpha():  # IF element is a letter
-                phone_number += self.letter2num[wordified_phone_number[i]]  # Convert to number
+
+        for i in range(len(dashless_phone_number)-1, -1, -1):
+            if dashless_phone_number[i].isalpha():  # IF element is a letter
+                phone_number = self.letter2num[dashless_phone_number[i]] + phone_number
             else:
-                phone_number += wordified_phone_number[i]
+                phone_number = dashless_phone_number[i] + phone_number
+            if (len(dashless_phone_number) - i) == 4 or (len(dashless_phone_number) - i) > 4 and (len(dashless_phone_number) - i - 4)%3 == 0:
+                phone_number = "-" + phone_number
+        print(phone_number)
+
         return phone_number
 
-    def find_substr(self, num, curr_string):
+    def find_substr(self, num, curr_string, raw_phone_number):
+        num_elements = len(raw_phone_number)
         for i in range(len(num) - 1, -1, -1):
             words = self.find_all_words(num[i:len(num)])
             if words:
                 for word in words:
-                    self.total_words.append(word + curr_string)
-                    self.find_substr(num[0:i], word + curr_string)
+                    new_words = word + curr_string
+                    if len(new_words) == 4 or (len(new_words) - 4) % 3 == 0:
+                        num_dashes = 0
+                        if len(new_words) != 4:
+                            num_dashes = int((len(new_words) - 4)/3)
+                        self.total_words.append(raw_phone_number[0:(len(raw_phone_number) - len(new_words) - num_dashes)] + new_words.upper())
+                    self.find_substr(num[0:i], new_words, raw_phone_number)
 
     def all_wordifications(self, raw_phone_number):
         """
@@ -87,6 +100,7 @@ class ConvertPhoneNumber:
 
         """
         dashless_phone_number = raw_phone_number.replace('-', '')
+        left_most_element = 0
 
         for i in range(len(dashless_phone_number) - 1, -1, -1):
             if dashless_phone_number[i] not in self.num2letter:
@@ -94,7 +108,8 @@ class ConvertPhoneNumber:
                 break
 
         reduced_phone_num = dashless_phone_number[left_most_element:]
-        self.find_substr(reduced_phone_num, "")
+        self.find_substr(reduced_phone_num, "", raw_phone_number)
+        print(self.total_words)
 
 
     def find_all_words(self, numbers):
