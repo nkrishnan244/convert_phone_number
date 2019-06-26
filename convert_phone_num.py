@@ -102,6 +102,8 @@ class ConvertPhoneNumber:
 
         """
         dashless_phone_number = raw_phone_number.replace('-', '')  # Get rid of dashes
+        raw_phone_number = include_dashes(dashless_phone_number) # In case user formats wrong
+
         left_most_element = 0
 
         # Can't wordify anything past a 0 or a 1

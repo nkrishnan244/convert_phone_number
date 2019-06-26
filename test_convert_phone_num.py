@@ -7,11 +7,11 @@ class TestConvertPhoneNumber(unittest.TestCase):
 
     def test_number_to_words(self):
         test_cases = [
-            "18007246837", # Given example
-            "1-800-724-6837", # Given example with dashes
-            "800-724-6837", # Given example without leading 1
-            "800-724-7777", # Impossible to make a word
-            "180072468370" # Impossible
+            "18007246837", # Given example (PASS)
+            "1-800-724-6837", # Given example with dashes (PASS)
+            "800-724-6837", # Given example without leading 1 (PASS)
+            "800-724-7777", # Impossible to make a word (PASS)
+            "180072468370" # Impossible (PASS)
         ]
         print("///////////////////////////////  TESTING NUMBER TO WORDS ///////////////////////////////")
         for test_string in test_cases:
@@ -34,12 +34,12 @@ class TestConvertPhoneNumber(unittest.TestCase):
 
     def test_all_wordifications(self):
         test_cases = [
-            "18007246837", # Given example
-            "1-800-724-6837", # Given example with dashes
-            "800-724-6837", # Given example without leading 1
-            "800-724-7777", # Impossible to make a word
-            "180072468370", # Impossible
-            "362-399-5464", # EMBEZZLING
+            "18007246837", # Given example (PASS)
+            "1-800-724-6837", # Given example with dashes (PASS)
+            "800-724-6837", # Given example without leading 1 (PASS)
+            "800-724-7777", # Impossible to make a word (PASS)
+            "180072468370", # Impossible (PASS)
+            "362-399-5464", # EMBEZZLING (PASS)
         ]
         print("/////////////////////////////// TESTING ALL WORDIFICATIONS ///////////////////////////////")
         for test_string in test_cases:
