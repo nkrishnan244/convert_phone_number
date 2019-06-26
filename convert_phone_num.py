@@ -1,14 +1,15 @@
-from create_dictionaries import get_dicts, get_word_list, include_dashes
+from helper_functions import get_dicts, get_word_list, include_dashes
 from itertools import product
 import pdb
 import random
+
 
 class ConvertPhoneNumber:
     def __init__(self):
         self.letter2num, self.num2letter = get_dicts()
         self.word_list = get_word_list()
         self.total_words = []
-        print(self.number_to_words("3333"))
+
 
     def number_to_words(self, raw_phone_number):
         """
@@ -84,8 +85,8 @@ class ConvertPhoneNumber:
                     if len(new_words) == 4 or (len(new_words) - 4) % 3 == 0: # Only wordify if we are at 4, 7, 10, etc
                         num_dashes = 0
                         if len(new_words) != 4:
-                            num_dashes = int((len(new_words) - 4)/3) # Number of dashes for concatenation
-                            final_element = len(raw_phone_number) - len(new_words) - num_dashes
+                            num_dashes = int((len(new_words) - 4)/3)  # Number of dashes for concatenation
+                        final_element = len(raw_phone_number) - len(new_words) - num_dashes
                         self.total_words.append(raw_phone_number[0:final_element] + new_words.upper())  # Save string
                     self.find_substr(num[0:i], new_words, raw_phone_number)  # Find substrings before current words
 
@@ -143,7 +144,3 @@ class ConvertPhoneNumber:
                 # Create and store wordified number
                 words.append(curr_word)
         return words
-
-
-
-ConvertPhoneNumber()
